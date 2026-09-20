@@ -3,6 +3,8 @@
 import { fail, ok, readJson } from "@/lib/http";
 import { getBundle } from "@/lib/store";
 import { sendTeamEmail } from "@/lib/email/send";
+import type { MailAttachment } from "@/lib/email/send";
+import { meetingSummaryMarkdown } from "@/lib/email/markdown";
 import {
   confirmedMail,
   inviteMail,
@@ -70,6 +72,18 @@ export async function POST(req: Request): Promise<Response> {
   let usedGmail = false;
   let firstError: string | undefined;
 
+  // 요약 메일에는 회의록 마크다운을 첨부한다(못 온 사람이 파일로 받게).
+  const attachments: MailAttachment[] =
+    body.kind === "MEETING_SUMMARY" && meeting
+      ? [
+          {
+            filename: `${meeting.number}회차_회의록.md`,
+            mimeType: "text/markdown",
+            content: meetingSummaryMarkdown(bundle.project, meeting),
+          },
+        ]
+      : [];
+
   for (let i = 0; i < bundle.members.length; i++) {
     const member = bundle.members[i];
     const mail = buildMail(member);
@@ -78,6 +92,7 @@ export async function POST(req: Request): Promise<Response> {
       recipients: [member.email],
       subject: mail.subject,
       html: mail.html,
+      attachments,
     });
 
     if (i === 0 && result.error === "NOT_CONNECTED") {

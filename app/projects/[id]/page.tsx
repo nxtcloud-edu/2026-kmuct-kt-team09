@@ -6,6 +6,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonClass } from "@/components/ui/button";
 import { MemberList } from "@/components/member-list";
+import { ProjectProgress } from "@/components/project-progress";
 import { api } from "@/lib/api-client";
 import type { ProjectBundle } from "@/lib/types";
 
@@ -119,6 +120,9 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
           </div>
         </CardHeader>
       </Card>
+
+      {/* 진행 상황 카드 */}
+      <ProjectProgress bundle={bundle} />
 
       {/* 다음 행동 카드 */}
       <Card className="border-2 border-black">
