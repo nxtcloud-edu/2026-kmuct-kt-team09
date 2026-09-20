@@ -1,5 +1,7 @@
 <div align="center">
   <h1>맞춤</h1>
+  <img width="1254" height="1254" alt="image" src="https://github.com/user-attachments/assets/3cb7ffa3-4028-4de7-9530-d48be31677b6" />
+
   <p><strong>팀플 일정 조율부터 회의 기록, 최종 보고서까지 챙겨주는 AI 에이전트</strong></p>
   <p>구글 캘린더로 모두가 되는 시간을 찾고, 회의 안건과 요약, 리마인드를 AI가 대신 챙깁니다.</p>
   <p>
