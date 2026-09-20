@@ -29,7 +29,7 @@ export function meetingSummaryMarkdown(project: Project, meeting: Meeting): stri
     for (const d of s.decisions) lines.push(`- ${d}`);
 
     lines.push("");
-    lines.push("## Action Item");
+    lines.push("## 담당별 할 일");
     if (s.actionItems.length === 0) {
       lines.push("- 기록된 항목 없음");
     } else {
