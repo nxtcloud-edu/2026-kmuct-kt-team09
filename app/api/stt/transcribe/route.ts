@@ -27,8 +27,8 @@ export async function POST(req: Request): Promise<Response> {
   }
 
   const upstream = new FormData();
-  // 다글로 지원 확장자로 맞춘다(브라우저 webm 오디오 = weba).
-  upstream.append("file", file, "recording.weba");
+  // 클라이언트가 16kHz 모노 WAV로 변환해 보낸다(webm/opus는 다글로가 거부).
+  upstream.append("file", file, file.name || "recording.wav");
 
   const started = Date.now();
   try {

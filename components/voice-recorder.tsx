@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { blobToWav } from "@/lib/audio/wav";
 
 const MAX_SECONDS = 28; // 다글로 동기 API는 30초 이하만 받는다
 
@@ -31,8 +32,10 @@ export function VoiceRecorder({ onTranscript }: Props) {
     setBusy(true);
     setMessage("음성을 글로 옮기는 중…");
     try {
+      // 다글로는 브라우저 webm/opus를 거부한다(422 Corrupted audio file) → WAV로 변환해 보낸다.
+      const wav = await blobToWav(blob);
       const form = new FormData();
-      form.append("file", blob, "recording.weba");
+      form.append("file", wav, "recording.wav");
       const res = await fetch("/api/stt/transcribe", { method: "POST", body: form });
       const json = await res.json();
       if (!json.ok) {
