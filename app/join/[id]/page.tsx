@@ -6,7 +6,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { buttonClass } from "@/components/ui/button";
 import { api } from "@/lib/api-client";
-import type { ProjectBundle, Member } from "@/lib/types";
+import type { ProjectBundle } from "@/lib/types";
 
 export default function JoinPage({
   params,
