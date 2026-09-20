@@ -61,6 +61,6 @@ export function meetingSummaryMarkdown(project: Project, meeting: Meeting): stri
   }
 
   lines.push("");
-  lines.push(`_TeamFlow가 정리했습니다._`);
+  lines.push(`_맞춤이 정리했습니다._`);
   return lines.join("\n");
 }

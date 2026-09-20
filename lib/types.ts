@@ -1,4 +1,4 @@
-// TeamFlow 공통 계약. 날짜 "YYYY-MM-DD", 시각 "HH:MM"(24시간, Asia/Seoul), 시점 ISO 문자열.
+// 맞춤 공통 계약. 날짜 "YYYY-MM-DD", 시각 "HH:MM"(24시간, Asia/Seoul), 시점 ISO 문자열.
 export type ISO = string;
 export type YMD = string;
 export type HHMM = string;

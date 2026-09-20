@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TeamFlow",
+  title: "맞춤",
   description: "AI 팀프로젝트 회의 매니저",
 };
 
