@@ -98,10 +98,10 @@ export default function JoinPage({
             {member.name}님, &quot;{project.name}&quot; 팀에 초대되었습니다
           </CardTitle>
           <CardDescription className="space-y-2 mt-3">
-            <p>{project.goal}</p>
-            <p className="text-sm">
+            <span className="block">{project.goal}</span>
+            <span className="block text-sm">
               <strong>마감:</strong> {project.deadline}
-            </p>
+            </span>
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

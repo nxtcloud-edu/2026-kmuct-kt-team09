@@ -25,7 +25,9 @@ export function authUrl(state: string, leader: boolean): string {
   const client = oauthClient();
   return client.generateAuthUrl({
     access_type: "offline",
-    prompt: "consent",
+    // select_account: 브라우저에 물려 있는 계정으로 자동 진입하지 않고 항상 계정 선택 화면을 띄운다
+    // (학교 계정이 기본이면 access_denied가 난다)
+    prompt: "select_account consent",
     include_granted_scopes: true,
     scope: leader ? SCOPES_LEADER : SCOPES_MEMBER,
     state,
