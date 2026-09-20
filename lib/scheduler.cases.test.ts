@@ -181,4 +181,31 @@ describe("맞춤 시간 추천 — 4인 시나리오", () => {
     expect(a.slots.map((s) => s.id)).toEqual(b.slots.map((s) => s.id));
     expect(a.remaining).toBe(b.remaining);
   });
+  it("공휴일은 후보에서 빠진다 (추석 9/24~26)", () => {
+    const r = recommend({
+      ...BASE,
+      now: "2026-09-23T09:00:00+09:00", // 수요일
+      deadline: "2026-09-30",
+      availability: availability({}),
+    });
+    console.log("\n[공휴일] 추석 연휴 제외 확인");
+    r.slots.forEach((s) => console.log("   " + line(s)));
+
+    const dates = new Set(r.slots.map((s) => s.date));
+    expect(dates.has("2026-09-24")).toBe(false); // 추석 연휴
+    expect(dates.has("2026-09-25")).toBe(false); // 추석
+    // 목·금이 연휴라 그 다음 평일(월)로 넘어간다
+    expect(r.slots[0].date).toBe("2026-09-28");
+  });
+
+  it("공휴일 제외를 끄면 다시 후보가 된다", () => {
+    const off = recommend({
+      ...BASE,
+      now: "2026-09-23T09:00:00+09:00",
+      deadline: "2026-09-30",
+      availability: availability({}),
+      skipHolidays: false,
+    });
+    expect(off.slots[0].date).toBe("2026-09-24");
+  });
 });

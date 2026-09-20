@@ -17,6 +17,9 @@ const base: ScheduleInput = {
   availability: [],
   excludedSlotIds: [],
   meetingNumber: 2,
+  // 이 파일은 참석률·정렬 규칙을 보는 테스트라 공휴일 제외를 끈다
+  // (고정 날짜 09-24·25가 2026년 추석이다)
+  skipHolidays: false,
 };
 
 function busy(id: string, date: string, from: string, to: string): MemberAvailability {

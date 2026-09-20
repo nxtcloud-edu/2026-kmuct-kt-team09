@@ -1,5 +1,6 @@
 import type { TimeSlot, MemberAvailability, YMD, HHMM, ISO } from "@/lib/types";
 import { toMin, toHHMM, kstParts, addDays, weekdayOf, compareYmd, busyRangesOn } from "./time";
+import { isHoliday } from "./holidays";
 
 export interface ScheduleInput {
   now: ISO;
@@ -18,6 +19,8 @@ export interface ScheduleInput {
   excludedDates?: YMD[];
   horizonDays?: number;
   slotMinutes?: number;
+  /** 기본 true. 테스트에서만 끈다 */
+  skipHolidays?: boolean;
 }
 
 export interface ScheduleResult {
@@ -47,6 +50,7 @@ export function rankAll(input: ScheduleInput, lengthMinutes: number): TimeSlot[]
     excludedDates = [],
     horizonDays = 14,
     slotMinutes = 30,
+    skipHolidays = true,
   } = input;
 
   if (memberIds.length === 0) return [];
@@ -75,7 +79,8 @@ export function rankAll(input: ScheduleInput, lengthMinutes: number): TimeSlot[]
   let d = addDays(today, 1);
   while (compareYmd(d, last) <= 0) {
     const wd = weekdayOf(d);
-    if (!weekdays.includes(wd) || excludedDates.includes(d)) {
+    // 공휴일은 후보에서 뺀다 (구독 캘린더라 Free/Busy에 안 잡힌다)
+    if (!weekdays.includes(wd) || excludedDates.includes(d) || (skipHolidays && isHoliday(d))) {
       d = addDays(d, 1);
       continue;
     }
