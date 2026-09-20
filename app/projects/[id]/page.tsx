@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button, buttonClass } from "@/components/ui/button";
 import { MemberList } from "@/components/member-list";
 import { api } from "@/lib/api-client";
-import type { ProjectBundle, Meeting } from "@/lib/types";
+import type { ProjectBundle } from "@/lib/types";
 
 export default function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);

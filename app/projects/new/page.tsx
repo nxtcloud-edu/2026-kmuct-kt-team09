@@ -184,7 +184,7 @@ export default function NewProjectPage() {
         maxMeetingMinutes,
         weekdays,
       },
-      members: members.map((m, i) => ({
+      members: members.map((m) => ({
         name: m.name,
         email: m.email,
       })),
