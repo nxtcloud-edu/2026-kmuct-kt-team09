@@ -6,6 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonClass } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { VoiceRecorder } from "@/components/voice-recorder";
 import { SummaryView } from "@/components/summary-view";
 import { api } from "@/lib/api-client";
 import type { ProjectBundle } from "@/lib/types";
@@ -320,6 +321,11 @@ export default function MeetingPage({
               value={rawNotes}
               onChange={(e) => setRawNotes(e.target.value)}
               placeholder="회의하며 적은 내용을 그대로 붙여 넣으세요"
+            />
+            <VoiceRecorder
+              onTranscript={(text) =>
+                setRawNotes((prev) => (prev.trim() ? `${prev.trim()}\n${text}` : text))
+              }
             />
             <div className="flex items-center justify-between">
               <span className="text-sm text-gray-500">{rawNotes.length}자</span>
