@@ -107,6 +107,7 @@ async function main() {
         minMeetingMinutes: 60,
         maxMeetingMinutes: 60,
         weekdays: [1, 2, 3, 4, 5],
+        meetingType: "offline",
       },
       members: [1, 2, 3, 4].map((i) => ({
         name: `e2e${i}`,
