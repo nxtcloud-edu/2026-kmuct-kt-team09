@@ -1,0 +1,18 @@
+# AWS App Runner 소스 배포 설정.
+# 콘솔에서 GitHub 저장소를 연결하고 "설정 파일 사용"을 고르면 이 파일이 쓰인다.
+version: 1.0
+runtime: nodejs22
+build:
+  commands:
+    build:
+      - npm ci
+      - npm run build
+run:
+  runtime-version: 22
+  command: npm start
+  network:
+    port: 3000
+    env: PORT
+  env:
+    - name: NODE_ENV
+      value: production
