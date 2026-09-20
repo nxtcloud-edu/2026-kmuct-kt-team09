@@ -31,9 +31,9 @@ export function SummaryView({ summary }: SummaryViewProps) {
         )}
       </div>
 
-      {/* Action Item 표 */}
+      {/* 담당별 할 일 표 */}
       <div>
-        <h3 className="text-lg font-semibold mb-2">Action Item</h3>
+        <h3 className="text-lg font-semibold mb-2">담당별 할 일</h3>
         {actionItems.length === 0 ? (
           <p className="text-gray-500">없음</p>
         ) : (

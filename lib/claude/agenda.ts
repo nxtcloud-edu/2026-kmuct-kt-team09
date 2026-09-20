@@ -62,7 +62,7 @@ export async function generateMeetingAgenda(input: {
     const items =
       input.previousMeetingSummary?.nextAgenda && input.previousMeetingSummary.nextAgenda.length > 0
         ? input.previousMeetingSummary.nextAgenda
-        : ["지난 회의 Action Item 점검", "남은 일정 확인", "다음 할 일 정하기"];
+        : ["지난 회의 할 일 점검", "남은 일정 확인", "다음 할 일 정하기"];
 
     fallback = {
       title: `${input.meetingNumber}회차 회의`,

@@ -29,7 +29,7 @@ export function meetingSummaryMarkdown(project: Project, meeting: Meeting): stri
     for (const d of s.decisions) lines.push(`- ${d}`);
 
     lines.push("");
-    lines.push("## Action Item");
+    lines.push("## 담당별 할 일");
     if (s.actionItems.length === 0) {
       lines.push("- 기록된 항목 없음");
     } else {
@@ -61,6 +61,6 @@ export function meetingSummaryMarkdown(project: Project, meeting: Meeting): stri
   }
 
   lines.push("");
-  lines.push(`_TeamFlow가 정리했습니다._`);
+  lines.push(`_맞춤이 정리했습니다._`);
   return lines.join("\n");
 }

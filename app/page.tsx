@@ -55,7 +55,7 @@ export default function LandingPage() {
           </CardHeader>
           <CardContent>
             <CardDescription>
-              회의 메모를 입력하면 결정 사항·Action Item·다음 안건으로 정리하고, 프로젝트가 끝나면 최종 보고서를 생성합니다.
+              회의 메모를 입력하면 결정 사항·담당별 할 일·다음 안건으로 정리하고, 프로젝트가 끝나면 최종 보고서를 생성합니다.
             </CardDescription>
           </CardContent>
         </Card>
