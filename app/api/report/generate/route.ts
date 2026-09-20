@@ -1,7 +1,6 @@
 // POST /api/report/generate — 최종 보고서를 만들어 저장한다(프로젝트가 closed로 바뀐다).
-// 지금은 mockReport 고정. D1이 Claude 호출로 본문만 갈아낀다(응답 모양은 그대로).
 import { fail, ok, readJson } from "@/lib/http";
-import { mockReport } from "@/lib/mock";
+import { generateFinalReport } from "@/lib/claude/report";
 import { getBundle, saveReport } from "@/lib/store";
 import type { FinalReport } from "@/lib/types";
 
@@ -18,7 +17,22 @@ export async function POST(req: Request): Promise<Response> {
   const bundle = await getBundle(body.projectId);
   if (!bundle) return fail("not found", 404);
 
-  const report = mockReport(body.projectId);
+  const doneMeetings = bundle.meetings
+    .filter((m) => m.status === "done" && m.summary !== null)
+    .sort((a, b) => a.number - b.number);
+
+  if (doneMeetings.length === 0) {
+    return fail("요약된 회의가 없습니다", 409);
+  }
+
+  const report = await generateFinalReport({
+    projectId: body.projectId,
+    projectName: bundle.project.name,
+    projectGoal: bundle.project.goal,
+    deadline: bundle.project.deadline,
+    meetings: doneMeetings,
+  });
+
   await saveReport(body.projectId, report);
   const data: { report: FinalReport } = { report };
   return ok(data);
