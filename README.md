@@ -149,14 +149,14 @@ AWS Bedrock의 **Claude Haiku**를 주최측 OpenAI 호환 게이트웨이로 �
 | 일정 연동 | Google Calendar Free/Busy API |
 | 메일 | Gmail API (팀장 구글 계정) |
 | 음성 인식 | Daglo STT (동기 API, 30초 이하) |
-| 저장소 | 메모리 저장소 (`lib/store.ts`) — 함수 시그니처는 DB 교체를 전제로 설계 |
+| 저장소 | Supabase Postgres (`lib/store.ts`) — 키가 없으면 메모리로 폴백 |
 | 테스트 | Vitest 23개 |
 | 개발 도구 | Kiro 커스텀 에이전트 4개 |
 
 ```mermaid
 flowchart LR
     U[브라우저] --> N[Next.js · Vercel]
-    N --> ST[(메모리 저장소)]
+    N --> ST[(Supabase · Seoul)]
     N --> GC[Google Calendar API]
     N --> GM[Gmail API]
     N --> DG[Daglo STT]
@@ -198,7 +198,7 @@ npm run build       # 프로덕션 빌드
 | `NEXT_PUBLIC_APP_URL` | 배포 주소 |
 | `DAGLO_API_TOKEN` | 다글로 STT 토큰 |
 | `CRON_SECRET` | 리마인드 크론 인증용 비밀키 |
-| `SUPABASE_URL` · `SUPABASE_SERVICE_KEY` | (선택) 토큰 영구 저장용 |
+| `SUPABASE_URL` · `SUPABASE_SERVICE_KEY` | 프로젝트·회의 영구 저장. 없으면 메모리로 동작(서버리스에서는 데이터가 사라짐) |
 
 구글 콘솔 준비물: Calendar API·Gmail API 사용 설정, OAuth 동의 화면을 **테스트** 상태로 두고 **테스트 사용자에 팀원 계정 등록**, 리디렉션 URI 2개(`http://localhost:3000/...`, `https://<배포주소>/...`).
 
@@ -250,7 +250,7 @@ lib/
   email/                        템플릿 · Gmail 발송 · 마크다운
   claude/                       게이트웨이 클라이언트 · 안건 · 요약 · 보고서 · 역할
   audio/wav.ts                  녹음 → WAV 변환
-  store.ts                      저장소 (메모리)
+  store.ts                      저장소 (Supabase · 키 없으면 메모리)
 scripts/e2e.mjs                 13단계 통합 점검
 .kiro/agents/                   Kiro 커스텀 에이전트
 docs/pipeline.png               파이프라인 그림
@@ -285,7 +285,6 @@ kiro-cli chat --agent teamflow-a
 
 ## 현재 제한사항
 
-- **저장소가 메모리입니다.** 서버리스 인스턴스가 재활용되면 진행 중인 프로젝트가 사라집니다. `lib/store.ts`의 함수 8개는 저장 위치만 바꾸면 되도록 설계했지만 DB 연결은 아직입니다.
 - **음성 받아쓰기는 28초 구간 단위**입니다. 다글로 동기 API가 30초 이하만 받습니다. 회의 전체 녹음은 비동기 API와 스토리지 업로드가 필요합니다.
 - **구글 OAuth 동의 화면이 테스트 상태**라, 테스트 사용자로 등록한 계정만 연결할 수 있고 "확인되지 않은 앱" 경고가 뜹니다. 프로덕션 전환에는 구글 검증이 필요합니다.
 - **공휴일 목록이 코드에 하드코딩**돼 있습니다 (2026~2027). 구독 캘린더는 Free/Busy에 잡히지 않아 직접 걸러냅니다.
