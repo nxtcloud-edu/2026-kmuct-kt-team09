@@ -50,3 +50,7 @@ export interface MeetingRef { projectId: string; meetingId: string }
 export interface SummarizeReq extends MeetingRef { rawNotes: string }
 export interface EmailReq { projectId: string; kind: EmailKind; meetingId?: string }
 export interface EmailRes { sent: number; via: "gmail" | "mock"; error?: string }
+// 역할 제안 (사람에게 배정하지 않고 나눠만 둔다)
+export interface RoleSuggestion { title: string; scope: string; firstTask: string }
+export interface RolesReq { projectId: string }
+export interface RolesRes { roles: RoleSuggestion[] }

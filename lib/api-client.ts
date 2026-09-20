@@ -12,6 +12,7 @@ import type {
   ProjectBundle,
   RecommendReq,
   RecommendRes,
+  RolesRes,
   SummarizeReq,
   Agenda,
 } from "@/lib/types";
@@ -83,6 +84,13 @@ export const api = {
     return call<{ summary: MeetingSummary }>("/api/meeting/summarize", {
       method: "POST",
       body: JSON.stringify(body),
+    });
+  },
+
+  suggestRoles(projectId: string) {
+    return call<RolesRes>("/api/projects/roles", {
+      method: "POST",
+      body: JSON.stringify({ projectId }),
     });
   },
 

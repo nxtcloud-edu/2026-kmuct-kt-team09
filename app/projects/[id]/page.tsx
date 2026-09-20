@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button, buttonClass } from "@/components/ui/button";
 import { MemberList } from "@/components/member-list";
 import { ProjectProgress } from "@/components/project-progress";
+import { RoleSplit } from "@/components/role-split";
 import { api } from "@/lib/api-client";
 import type { ProjectBundle } from "@/lib/types";
 
@@ -165,6 +166,9 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
           )}
         </CardContent>
       </Card>
+
+      {/* 역할 나누기 카드 */}
+      <RoleSplit projectId={id} memberCount={members.length} />
 
       {/* 팀원과 캘린더 연결 카드 */}
       <Card>
