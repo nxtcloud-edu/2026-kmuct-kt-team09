@@ -5,7 +5,11 @@ import { loadTokens, saveTokens } from "./tokens";
 export type GoogleClient = InstanceType<typeof google.auth.OAuth2>;
 
 export const SCOPES_MEMBER = ["https://www.googleapis.com/auth/calendar.freebusy"];
-export const SCOPES_LEADER = [...SCOPES_MEMBER, "https://www.googleapis.com/auth/gmail.send"];
+export const SCOPES_LEADER = [
+  ...SCOPES_MEMBER,
+  "https://www.googleapis.com/auth/calendar.events",
+  "https://www.googleapis.com/auth/gmail.send",
+];
 
 export function googleConfigured(): boolean {
   return Boolean(

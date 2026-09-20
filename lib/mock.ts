@@ -29,6 +29,7 @@ export const mockProject: Project = {
   minMeetingMinutes: 60,
   maxMeetingMinutes: 90,
   weekdays: [1, 2, 3, 4, 5],
+  meetingType: "online",
   status: "active",
   createdAt: MOCK_NOW,
 };

@@ -3,11 +3,11 @@
 import { use, useEffect, useState } from "react";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button, buttonClass } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { VoiceRecorder } from "@/components/voice-recorder";
 import { SummaryView } from "@/components/summary-view";
+import { MeetingInfoCard } from "@/components/meeting-info-card";
 import { api } from "@/lib/api-client";
 import type { ProjectBundle } from "@/lib/types";
 
@@ -182,16 +182,6 @@ export default function MeetingPage({
     );
   }
 
-  const availableNames = meeting.slot.availableMembers
-    .map((memberId) => members.find((m) => m.id === memberId)?.name)
-    .filter(Boolean)
-    .join(", ");
-
-  const unavailableNames = meeting.slot.unavailableMembers
-    .map((memberId) => members.find((m) => m.id === memberId)?.name)
-    .filter(Boolean)
-    .join(", ");
-
   const doneCount = meetings.filter((m) => m.status === "done").length;
   const canGenerateReport = doneCount >= project.expectedMeetingCount;
 
@@ -213,33 +203,8 @@ export default function MeetingPage({
 
       {/* 구역 1: 회의 정보 */}
       <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between gap-4">
-            <CardTitle>{meeting.number}회차 회의</CardTitle>
-            <Badge variant={meeting.status === "scheduled" ? "warning" : "success"}>
-              {meeting.status === "scheduled" ? "예정" : "완료"}
-            </Badge>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          <div>
-            <span className="font-medium">일시:</span>{" "}
-            <span className="text-gray-700">
-              {meeting.slot.date} {meeting.slot.start}~{meeting.slot.end}
-            </span>
-          </div>
-          {availableNames && (
-            <div>
-              <span className="font-medium">참석 가능:</span>{" "}
-              <span className="text-gray-700">{availableNames}</span>
-            </div>
-          )}
-          {unavailableNames && (
-            <div>
-              <span className="font-medium">불참 예상:</span>{" "}
-              <span className="text-gray-700">{unavailableNames}</span>
-            </div>
-          )}
+        <CardContent className="py-6">
+          <MeetingInfoCard meeting={meeting} members={members} project={project} />
         </CardContent>
       </Card>
 

@@ -33,6 +33,9 @@ export async function POST(req: Request): Promise<Response> {
     if (!isNum(project[key])) return fail(`project.${key} must be a number`);
   }
   if (!Array.isArray(project.weekdays)) return fail("project.weekdays must be an array");
+  if (project.meetingType !== "online" && project.meetingType !== "offline") {
+    return fail("project.meetingType must be 'online' or 'offline'");
+  }
 
   if (!Array.isArray(members) || members.length === 0) {
     return fail("members must be a non-empty array");

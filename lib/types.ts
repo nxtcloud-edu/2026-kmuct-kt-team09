@@ -9,6 +9,7 @@ export interface Project {
   preferredStart: HHMM; preferredEnd: HHMM;      // 선호 시간대
   minMeetingMinutes: number; maxMeetingMinutes: number;
   weekdays: number[];                            // 0=일 … 6=토. 회의 가능한 요일
+  meetingType: "online" | "offline";             // 온라인/오프라인 회의
   status: "active" | "closed"; createdAt: ISO;
 }
 export interface Member {
@@ -31,6 +32,7 @@ export interface Meeting {
   id: string; projectId: string; number: number; slot: TimeSlot;
   status: "scheduled" | "done";
   agenda: Agenda | null; rawNotes: string | null; summary: MeetingSummary | null;
+  meetLink: string | null;                       // Google Meet 링크
   reminderSentAt: ISO | null; createdAt: ISO;
 }
 export interface ReportSection { title: string; body: string }

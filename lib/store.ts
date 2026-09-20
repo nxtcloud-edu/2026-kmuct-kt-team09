@@ -110,6 +110,7 @@ export async function addMeeting(
     agenda,
     rawNotes: null,
     summary: null,
+    meetLink: null,
     reminderSentAt: null,
     createdAt: now(),
   };
@@ -120,7 +121,7 @@ export async function addMeeting(
 export async function updateMeeting(
   meetingId: string,
   patch: Partial<
-    Pick<Meeting, "status" | "agenda" | "rawNotes" | "summary" | "reminderSentAt">
+    Pick<Meeting, "status" | "agenda" | "rawNotes" | "summary" | "meetLink" | "reminderSentAt">
   >
 ): Promise<Meeting | null> {
   for (const bundle of db().values()) {

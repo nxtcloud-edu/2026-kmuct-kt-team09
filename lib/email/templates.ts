@@ -46,6 +46,10 @@ export function confirmedMail(project: Project, member: Member, meeting: Meeting
     ? `<p>캘린더상 이 시간에 다른 일정이 있습니다. 참석이 어려우면 회의 후 정리 메일을 확인하세요.</p>`
     : "";
 
+  const meetLinkHtml = meeting.meetLink
+    ? `<p><a href="${meeting.meetLink}" style="color:#1a73e8;font-weight:bold">🔗 Google Meet 참가하기</a></p>`
+    : "";
+
   const agenda = meeting.agenda;
   const agendaHtml = agenda
     ? `
@@ -60,6 +64,7 @@ export function confirmedMail(project: Project, member: Member, meeting: Meeting
     <p>일시: ${when(slot)}</p>
     <p>참석 가능 ${slot.availableMembers.length}/${slot.totalMembers}명</p>
     ${unavailableNotice}
+    ${meetLinkHtml}
     ${agendaHtml}
   `;
   return { subject, html: layout(subject, body) };
@@ -69,6 +74,10 @@ export function reminderMail(project: Project, member: Member, meeting: Meeting)
   const slot = meeting.slot;
   const subject = `[${project.name}] 내일 ${slot.start} 회의가 있습니다`;
 
+  const meetLinkHtml = meeting.meetLink
+    ? `<p><a href="${meeting.meetLink}" style="color:#1a73e8;font-weight:bold">🔗 Google Meet 참가하기</a></p>`
+    : "";
+
   const agendaItems = meeting.agenda?.agendaItems ?? null;
   const agendaHtml = agendaItems
     ? `<ol>${agendaItems.map((item) => `<li>${esc(item)}</li>`).join("")}</ol>`
@@ -76,6 +85,7 @@ export function reminderMail(project: Project, member: Member, meeting: Meeting)
 
   const body = `
     <p>내일 ${slot.start}~${slot.end}까지 회의가 예정되어 있습니다. 예상 회의 안건은 다음과 같습니다.</p>
+    ${meetLinkHtml}
     ${agendaHtml}
   `;
   return { subject, html: layout(subject, body) };

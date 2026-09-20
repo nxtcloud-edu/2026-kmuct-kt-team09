@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button, buttonClass } from "@/components/ui/button";
 import { api } from "@/lib/api-client";
-import type { ProjectBundle, FinalReport } from "@/lib/types";
+import type { ProjectBundle } from "@/lib/types";
 
 export default function ReportPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);

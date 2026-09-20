@@ -37,6 +37,7 @@ export default function NewProjectPage() {
   const [goal, setGoal] = useState("");
   const [deadline, setDeadline] = useState("");
   const [expectedMeetingCount, setExpectedMeetingCount] = useState(4);
+  const [meetingType, setMeetingType] = useState<"online" | "offline">("online");
   const [availableStart, setAvailableStart] = useState("10:00");
   const [availableEnd, setAvailableEnd] = useState("21:00");
   const [preferredStart, setPreferredStart] = useState("18:00");
@@ -176,6 +177,7 @@ export default function NewProjectPage() {
         goal,
         deadline,
         expectedMeetingCount,
+        meetingType,
         availableStart,
         availableEnd,
         preferredStart,
@@ -270,6 +272,33 @@ export default function NewProjectPage() {
               {errors.expectedMeetingCount && (
                 <p className="text-sm text-red-600">{errors.expectedMeetingCount}</p>
               )}
+            </div>
+
+            {/* 회의 형태 */}
+            <div className="space-y-2">
+              <Label>회의 형태 *</Label>
+              <div className="flex gap-4">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="meetingType"
+                    value="online"
+                    checked={meetingType === "online"}
+                    onChange={() => setMeetingType("online")}
+                  />
+                  <span>온라인 (Google Meet 자동 생성)</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="meetingType"
+                    value="offline"
+                    checked={meetingType === "offline"}
+                    onChange={() => setMeetingType("offline")}
+                  />
+                  <span>오프라인 (직접 만남)</span>
+                </label>
+              </div>
             </div>
 
             {/* 회의 가능 시간대 */}
