@@ -1,0 +1,19 @@
+# AWS Amplify Hosting — Next.js SSR 빌드 설정.
+# 콘솔에서 GitHub 저장소를 연결하면 이 파일을 읽는다.
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm ci
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - node_modules/**/*
+      - .next/cache/**/*
